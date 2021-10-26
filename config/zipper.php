@@ -1,0 +1,235 @@
+<?php
+
+return [
+    // Nyilatkozat base64-be kódolva (template, tehát <NAME>, <NEPTUN>, <DATE> nélkül)
+    'statementPreview' => "S2lqZWxlbnRlbSwgaG9neSBlenQgYSBtZWdvbGTDoXN0IMOpbiBrw7xsZHRlbSBiZSBhIFN6ZXJ2ZXJvbGRhbGkgd2VicHJvZ3JhbW96w6FzIExhcmF2ZWwgYmVhZGFuZMOzIGZlbGFkYXTDoWhvei4KQSBmZWxhZGF0IGJlYWTDoXPDoXZhbCBlbGlzbWVyZW0sIGhvZ3kgdHVkb23DoXN1bCB2ZXR0ZW0gYSBueWlsYXRrb3phdGJhbiBmb2dsYWx0YWthdC4KCi0gS2lqZWxlbnRlbSwgaG9neSBleiBhIG1lZ29sZMOhcyBhIHNhasOhdCBtdW5rw6FtLgotIEtpamVsZW50ZW0sIGhvZ3kgbmVtIG3DoXNvbHRhbSB2YWd5IGhhc3puw6FsdGFtIGhhcm1hZGlrIGbDqWx0xZFsIHN6w6FybWF6w7MgbWVnb2xkw6Fzb2thdC4KLSBLaWplbGVudGVtLCBob2d5IG5lbSB0b3bDoWJiw610b3R0YW0gbWVnb2xkw6FzdCBoYWxsZ2F0w7N0w6Fyc2FpbW5haywgw6lzIG5lbSBpcyB0ZXR0ZW0gYXp0IGvDtnp6w6kuCi0gVHVkb23DoXN1bCB2ZXR0ZW0sIGhvZ3kgYXogRcO2dHbDtnMgTG9yw6FuZCBUdWRvbcOhbnllZ3lldGVtIEhhbGxnYXTDs2kgS8O2dmV0ZWxtw6lueXJlbmRzemVyZSAoRUxURSBzemVydmV6ZXRpIMOpcyBtxbFrw7Zkw6lzaSBzemFiw6FseXphdGEsIElJLiBLw7Z0ZXQsIDc0L0MuIMKnKSBraW1vbmRqYSwgaG9neSBtaW5kYWRkaWcsIGFtw61nIGVneSBoYWxsZ2F0w7MgZWd5IG3DoXNpayBoYWxsZ2F0w7MgbXVua8OhasOhdCAtIHZhZ3kgbGVnYWzDoWJiaXMgYW5uYWsgamVsZW50xZFzIHLDqXN6w6l0IC0gc2Fqw6F0IG11bmvDoWpha8OpbnQgbXV0YXRqYSBiZSwgYXogZmVneWVsbWkgdsOpdHPDqWduZWsgc3rDoW3DrXQuCi0gVHVkb23DoXN1bCB2ZXR0ZW0sIGhvZ3kgYSBmZWd5ZWxtaSB2w6l0c8OpZyBsZWdzw7pseW9zYWJiIGvDtnZldGtlem3DqW55ZSBhIGhhbGxnYXTDsyBlbGJvY3PDoXTDoXNhIGF6IGVneWV0ZW1yxZFsLgo=",
+
+    // Nyilatkozat template (<NÉV>, <NEPTUN>, <DATE> mellékelve, amibe behelyettesíthetők az adatok)
+    'statementTemplate' => "IyBOeWlsYXRrb3phdAoKw4luLCA8TkFNRT4gKE5lcHR1biBrw7NkOiA8TkVQVFVOPikga2lqZWxlbnRlbSwgaG9neSBlenQgYSBtZWdvbGTDoXN0IMOpbiBrw7xsZHRlbSBiZSBhIFN6ZXJ2ZXJvbGRhbGkgd2VicHJvZ3JhbW96w6FzIExhcmF2ZWwgYmVhZGFuZMOzIGZlbGFkYXTDoWhvei4KQSBmZWxhZGF0IGJlYWTDoXPDoXZhbCBlbGlzbWVyZW0sIGhvZ3kgdHVkb23DoXN1bCB2ZXR0ZW0gYSBueWlsYXRrb3phdGJhbiBmb2dsYWx0YWthdC4KCi0gS2lqZWxlbnRlbSwgaG9neSBleiBhIG1lZ29sZMOhcyBhIHNhasOhdCBtdW5rw6FtLgotIEtpamVsZW50ZW0sIGhvZ3kgbmVtIG3DoXNvbHRhbSB2YWd5IGhhc3puw6FsdGFtIGhhcm1hZGlrIGbDqWx0xZFsIHN6w6FybWF6w7MgbWVnb2xkw6Fzb2thdC4KLSBLaWplbGVudGVtLCBob2d5IG5lbSB0b3bDoWJiw610b3R0YW0gbWVnb2xkw6FzdCBoYWxsZ2F0w7N0w6Fyc2FpbW5haywgw6lzIG5lbSBpcyB0ZXR0ZW0gYXp0IGvDtnp6w6kuCi0gVHVkb23DoXN1bCB2ZXR0ZW0sIGhvZ3kgYXogRcO2dHbDtnMgTG9yw6FuZCBUdWRvbcOhbnllZ3lldGVtIEhhbGxnYXTDs2kgS8O2dmV0ZWxtw6lueXJlbmRzemVyZSAoRUxURSBzemVydmV6ZXRpIMOpcyBtxbFrw7Zkw6lzaSBzemFiw6FseXphdGEsIElJLiBLw7Z0ZXQsIDc0L0MuIMKnKSBraW1vbmRqYSwgaG9neSBtaW5kYWRkaWcsIGFtw61nIGVneSBoYWxsZ2F0w7MgZWd5IG3DoXNpayBoYWxsZ2F0w7MgbXVua8OhasOhdCAtIHZhZ3kgbGVnYWzDoWJiaXMgYW5uYWsgamVsZW50xZFzIHLDqXN6w6l0IC0gc2Fqw6F0IG11bmvDoWpha8OpbnQgbXV0YXRqYSBiZSwgYXogZmVneWVsbWkgdsOpdHPDqWduZWsgc3rDoW3DrXQuCi0gVHVkb23DoXN1bCB2ZXR0ZW0sIGhvZ3kgYSBmZWd5ZWxtaSB2w6l0c8OpZyBsZWdzw7pseW9zYWJiIGvDtnZldGtlem3DqW55ZSBhIGhhbGxnYXTDsyBlbGJvY3PDoXTDoXNhIGF6IGVneWV0ZW1yxZFsLgoKS2VsdDogPERBVEU+Cg==",
+
+    // Azok a mappák, amelyeknek mindenképpen jelen kell lenniük a zippelés pillanatában.
+    // Ha valamelyik nem található, akkor a hallgató hibát kap, és a rendszer kiírja neki,
+    // hogy melyek azok a mappák, amik ezek közül hiányoznak
+    'requiredDirs' => [
+        'app',
+        'app/Console',
+        'app/Exceptions',
+        'app/Http',
+        'app/Http/Controllers',
+        'app/Http/Middleware',
+        'app/Models',
+        'app/Providers',
+        'bootstrap',
+        'bootstrap/cache',
+        'config',
+        'database',
+        'database/factories',
+        'database/migrations',
+        'database/seeders',
+        'public',
+        'resources',
+        'resources/css',
+        'resources/js',
+        'resources/lang',
+        'resources/lang/en',
+        'resources/views',
+        'routes',
+        'storage',
+        'storage/app',
+        'storage/framework',
+        'storage/logs',
+        'tests',
+        'tests/Feature',
+        'tests/Unit',
+    ],
+
+    // Azok a fájlok, amelyeknek mindenképpen jelen kell lenniük a zippelés pillanatában.
+    // Ha valamelyik nem található, akkor a hallgató hibát kap, és a rendszer kiírja neki,
+    // hogy melyek azok a fájlok, amik ezek közül hiányoznak
+    'requiredFiles' => [
+        '.env.example',
+        '.gitattributes',
+        '.gitignore',
+        '.styleci.yml',
+        'artisan',
+        'composer.json',
+        'package.json',
+        'phpunit.xml',
+        'README.md',
+        'server.php',
+        'webpack.mix.js',
+        'app/Console/Kernel.php',
+        'app/Exceptions/Handler.php',
+        'app/Http/Kernel.php',
+        'app/Http/Controllers/Controller.php',
+        'app/Http/Middleware/Authenticate.php',
+        'app/Http/Middleware/EncryptCookies.php',
+        'app/Http/Middleware/PreventRequestsDuringMaintenance.php',
+        'app/Http/Middleware/RedirectIfAuthenticated.php',
+        'app/Http/Middleware/TrimStrings.php',
+        'app/Http/Middleware/TrustHosts.php',
+        'app/Http/Middleware/TrustProxies.php',
+        'app/Http/Middleware/VerifyCsrfToken.php',
+        'app/Models/User.php',
+        'app/Providers/AppServiceProvider.php',
+        'app/Providers/AuthServiceProvider.php',
+        'app/Providers/BroadcastServiceProvider.php',
+        'app/Providers/EventServiceProvider.php',
+        'app/Providers/RouteServiceProvider.php',
+        'bootstrap/app.php',
+        'config/app.php',
+        'config/auth.php',
+        'config/broadcasting.php',
+        'config/cache.php',
+        'config/cors.php',
+        'config/database.php',
+        'config/filesystems.php',
+        'config/hashing.php',
+        'config/logging.php',
+        'config/mail.php',
+        'config/queue.php',
+        'config/sanctum.php',
+        'config/services.php',
+        'config/session.php',
+        'config/view.php',
+        'database/.gitignore',
+        'database/factories/UserFactory.php',
+        'database/migrations/2014_10_12_000000_create_users_table.php',
+        'database/migrations/2014_10_12_100000_create_password_resets_table.php',
+        'database/migrations/2019_08_19_000000_create_failed_jobs_table.php',
+        'database/migrations/2019_12_14_000001_create_personal_access_tokens_table.php',
+        'database/seeders/DatabaseSeeder.php',
+        'public/.htaccess',
+        'public/index.php',
+        'resources/css/app.css',
+        'resources/js/app.js',
+        'resources/lang/en/auth.php',
+        'resources/lang/en/pagination.php',
+        'resources/lang/en/passwords.php',
+        'resources/lang/en/validation.php',
+        'routes/api.php',
+        'routes/channels.php',
+        'routes/console.php',
+        'routes/web.php',
+        'storage/app/.gitignore',
+        'storage/framework/.gitignore',
+        'storage/framework/cache/.gitignore',
+        'storage/framework/sessions/.gitignore',
+        'storage/framework/testing/.gitignore',
+        'storage/framework/views/.gitignore',
+        'storage/logs/.gitignore',
+        // Saját fájlok
+        'init.bat',
+        'init.sh',
+    ],
+
+    // Ezek az úgynevezett védett fájlok. Gyakorlatilag ez nem teljes védettséget jelent, hiszen a fájlok módosíthatók,
+    // csak annyit, hogy a módosításuk kb. egyáltalán nem szükséges a beadandó szempontjából. Ha valamelyik mégis módosul,
+    // az az esetek többségében valami hibából vagy egy overkill megoldásból ered.
+    // Ez csak warningot ad, megkérdezve a hallgatót, hogy tudatosan módosította-e a listázott fájlokat.
+    // Tehát ha valaki egy nagyon egyedi beadandót ír, az nem gond, és a zippelő se fogja hibával gátolni,
+    // csak biztos, ami biztos alapon listázni fogja a fájlokat.
+    'protectedFiles' => [
+        '.env.example',
+        '.gitattributes',
+        '.gitignore',
+        '.styleci.yml',
+        'artisan',
+        //'composer.json',
+        'phpunit.xml',
+        'server.php',
+        'app/Console/Kernel.php',
+        'app/Exceptions/Handler.php',
+        'app/Http/Kernel.php',
+        'app/Http/Controllers/Controller.php',
+        'app/Http/Middleware/Authenticate.php',
+        'app/Http/Middleware/EncryptCookies.php',
+        'app/Http/Middleware/PreventRequestsDuringMaintenance.php',
+        'app/Http/Middleware/RedirectIfAuthenticated.php',
+        'app/Http/Middleware/TrimStrings.php',
+        'app/Http/Middleware/TrustHosts.php',
+        'app/Http/Middleware/TrustProxies.php',
+        'app/Http/Middleware/VerifyCsrfToken.php',
+        'app/Providers/AppServiceProvider.php',
+        'app/Providers/AuthServiceProvider.php',
+        'app/Providers/BroadcastServiceProvider.php',
+        'app/Providers/EventServiceProvider.php',
+        // Breeze
+        //'app/Providers/RouteServiceProvider.php',
+        'bootstrap/app.php',
+        'config/auth.php',
+        'config/broadcasting.php',
+        'config/cache.php',
+        'config/cors.php',
+        'config/database.php',
+        'config/filesystems.php',
+        'config/hashing.php',
+        'config/logging.php',
+        'config/mail.php',
+        'config/queue.php',
+        'config/sanctum.php',
+        'config/services.php',
+        'config/session.php',
+        'config/view.php',
+        'database/.gitignore',
+        'database/migrations/2014_10_12_100000_create_password_resets_table.php',
+        'database/migrations/2019_08_19_000000_create_failed_jobs_table.php',
+        'database/migrations/2019_12_14_000001_create_personal_access_tokens_table.php',
+        'public/.htaccess',
+        'public/index.php',
+        'resources/lang/en/auth.php',
+        'resources/lang/en/pagination.php',
+        'resources/lang/en/passwords.php',
+        'resources/lang/en/validation.php',
+        'routes/api.php',
+        'routes/channels.php',
+        'routes/console.php',
+        'storage/app/.gitignore',
+        'storage/framework/.gitignore',
+        'storage/framework/cache/.gitignore',
+        'storage/framework/sessions/.gitignore',
+        'storage/framework/testing/.gitignore',
+        'storage/framework/views/.gitignore',
+        'storage/logs/.gitignore',
+        // Egyedi fájlok
+        'init.bat',
+        'init.sh',
+    ],
+
+    // A fenti protected files-ban felsorolt fájlok ellenőrzése checksum alapján történik.
+    // Kétféle checksum lista van (főmappában a checksums.json fájlból kerülnek kiolvasásra):
+    //    - az eredeti Laravel projektből kinyert (laravelChecksums)
+    //    - és egy saját, helyenként ez felülíró lista (overwriteChecksums)
+
+    // Az eredeti Laravel projektben (https://github.com/laravel/laravel/releases) lévő fájlok checksum-jai
+    // alapján tudjuk megállapítani, hogy egy fájl változott-e az eredeti Laravel projekthez képest.
+
+    // A sebesség és a hibák elkerülése érdekében ezek a .json fájlban vannak tárolva. Ezzel nincs gond, igazából
+    // a Laravelt is az oktatók adják a kezdőcsomaggal, tehát a kezdőcsomagban lévő Laravel verziójához bármikor
+    // hozzá lehet igazítani, és a hallhatók mindig hozzáigazítva kapják meg.
+    // A hozzáigazítást a "php artisan checksums" paranccsal lehet megtenni, ez automatikusan frissíti a
+    // checksums.json-t.
+
+    // Néhány esetben felül kell írni az eredeti checksumokat, pl olyan fájlok esetében, amiket
+    // az oktatók módosítottak az eredeti Laravelhez képest (különben módosítási warning lenne belőle),
+    // illetve az olyan fájlokat, amik az eredeti Laravelben nem is léteznek, de a kezdőcsomagban igen (pl init.sh).
+    'overwriteOriginalChecksums' => [
+        // Az eredeti Laravel projekthez képest módosított fájlok
+        '.env.example',
+        '.gitignore',
+        'composer.json',
+        'config/filesystems.php',
+        // Oktatók által hozzáadott egyedi fájlok
+        'init.bat',
+        'init.sh',
+        'config/zipper.php',
+    ],
+
+    // A .gitignore-kon felül itt még be lehet állítani, mik legyenek kihagyva
+    'manualIgnores' => [
+        'app/Console/Commands/checksums.php',
+        'app/Console/Commands/zip.php',
+        'config/zipper.php',
+        'checksums.json',
+    ],
+];
