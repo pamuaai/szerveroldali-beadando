@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MovieController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Models\User;
 
 /*
@@ -17,6 +18,15 @@ use App\Models\User;
 
 Route::get('/', [MovieController::class, 'index']);
 Route::get('/movie/{movie}', [MovieController::class, 'movie'])->name('movie');
+Route::post('/movie/rate', function (Request $request) {
+    $request->validate([
+        'rating' => 'required|regex:/[1-5]/',
+        'comment' => 'required'
+    ], [
+        'rating.required' => 'Kérjük pontozd a filmet 1-től 5-ig!',
+        'rating.regex' => 'Az értékelés egy 1 és 5 közötti szám legyen!',
+    ]);
+})->name('movie.rate');
 Route::get('/toplist', [MovieController::class, 'toplist'])->name('toplist');
 
 Route::get('/dashboard', function () {

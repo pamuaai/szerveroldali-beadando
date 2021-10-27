@@ -23,7 +23,7 @@ class MovieController extends Controller
 
     public function movie(Movie $movie)
     {
-        $ratings = Rating::where('movie_id', $movie->id)->paginate(10);
+        $ratings = $movie->ratings()->paginate(10);
         return view('movie', compact('movie', 'ratings'));
     }
 
