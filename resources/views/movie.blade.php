@@ -25,8 +25,23 @@
         <div class="avg-rating">Átlagos értékelés: {{ $movie->getRating()}}/5.00</div>
         <div class="row ratings-list">
             <h3>Vélemények:</h3>
-            @if (Auth::check())
-                userid: {{Auth::user()->id}}
+            @if ($movie->ratings_enabled)
+                @if (Auth::check())
+                
+                    <?php
+                        $userRating = $ratings->where('user_id', Auth::user()->id)->first();
+                    ?>
+                    @if ($userRating)
+                    Már írtál véleményt erről a filmről:
+                        {{ $userRating->comment }}
+                        {{ $userRating->rating }}/5
+                        módosítás
+                    @else
+                        Mondd el a véleményed!
+                    @endif
+                @endif
+            @else
+                A filmhez új értékelés nem írható
             @endif
             @foreach ( $ratings as $rating )
             <div class="col-12 p-3 rounded border my-3">
