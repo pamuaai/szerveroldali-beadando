@@ -4,82 +4,43 @@ namespace App\Http\Controllers;
 
 use App\Models\Rating;
 use Illuminate\Http\Request;
+use App\Models\Movie;
+use Illuminate\Support\Facades\Auth;
 
 class RatingController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage. Or update an existing one
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Movie  $movie
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Movie $movie)
     {
-        //
-    }
+        if (!$movie->ratings_enabled) {
+            return redirect()->route('movie', $movie);
+        }
+        $data = $request->validate([
+            'rating' => 'required|regex:/[1-5]/',
+            'comment' => 'required'
+        ], [
+            'rating.required' => 'Kérjük pontozd a filmet 1-től 5-ig!',
+            'rating.regex' => 'Az értékelés egy 1 és 5 közötti szám legyen!',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Rating  $rating
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Rating $rating)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Rating  $rating
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Rating $rating)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Rating  $rating
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Rating $rating)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Rating  $rating
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Rating $rating)
-    {
-        //
+        $rating = Rating::where('movie_id', $movie->id)
+            ->where('user_id', Auth::user()->id)
+            ->first();
+        if ($rating === null) {
+            $rating = new Rating;
+            $rating->movie_id = $movie->id;
+            $rating->user_id = Auth::user()->id;
+        }
+        $rating->comment = $data['comment'];
+        $rating->rating = $data['rating'];
+        $rating->save();
+        $request->session()->flash('movie_rated', true);
+        return redirect()->route('movie', $movie);
     }
 }

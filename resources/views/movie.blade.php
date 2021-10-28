@@ -32,18 +32,17 @@
             @if ($movie->ratings_enabled)
                 @auth
                     <?php
-                    $userRating = $ratings->where('user_id', Auth::user()->id)->first();
+                    $userRating = $movie->ratings->where('user_id', Auth::user()->id)->first();
                     ?>
-                    @if ($userRating)
-                        <div class="h5">Már írtál véleményt erről a filmről:</div>
-                        {{ $userRating->comment }}
-                        {{ $userRating->rating }}/5
-                        módosítás
-                    @else
-                        Mondd el a véleményed!
+                    @if (Session::has('movie_rated'))
+                        <div class="alert alert-success" role="alert">
+                            A filmet sikeresen értékelted!
+                        </div>
                     @endif
-
-                    <form action="{{ route('movie.rate') }}" method="POST">
+                    <div class="h5">
+                        @if ($userRating) Már írtál véleményt erről a filmről: @else Mondd el a véleményed! @endif
+                    </div>
+                    <form action="{{ route('movie.rate', $movie) }}" method="POST">
                         @csrf
                         <?php
                         $initRating = old('rating') ? old('rating') : ($userRating ? $userRating->rating : ''); ?>
@@ -76,6 +75,8 @@
                         <br>
                         <button type="submit" class="btn btn-primary">Küldés</button>
                     </form>
+                @else
+                    <div>A film értékeléséhez <a href="/login">jelentkezz be!</a></div>
                 @endauth
 
             @else
