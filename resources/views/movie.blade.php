@@ -32,7 +32,7 @@
             @if ($movie->ratings_enabled)
                 @auth
                     <?php
-                    $userRating = $movie->ratings->where('user_id', Auth::user()->id)->first();
+                    $userRating = $movie->ratings->where('user_id', Auth::id())->first();
                     ?>
                     @if (Session::has('movie_rated'))
                         <div class="alert alert-success" role="alert">

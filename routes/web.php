@@ -2,12 +2,8 @@
 
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RatingController;
-use App\Models\Rating;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Movie;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +17,8 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', [MovieController::class, 'index']);
+
+Route::get('/logout', [UserController::class, 'logout']);
 
 Route::get('/movie/{movie}', [MovieController::class, 'movie'])->name('movie');
 
