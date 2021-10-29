@@ -14,6 +14,7 @@
 </head>
 
 <body>
+    @include('header')
     <div class="container mt-5">
 
         <h1>{{ $movie->title }} ({{ $movie->year }})</h1>
