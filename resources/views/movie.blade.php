@@ -24,10 +24,11 @@
                 <img src="{{ $movie->image }}" alt="{{ $movie->title }} :Movie poster" class="img-fluid" />
             </div>
             <div class="col-md-6">
+                <h3>Leírás</h3>
                 {{ $movie->description }}
             </div>
         </div>
-        <div class="avg-rating">Átlagos értékelés: {{ $movie->getRating() }}/5.00</div>
+        <h3 class="avg-rating mt-3">Átlagos értékelés: {{ $movie->getRating() }}/5.00</h3>
         <div class="row ratings-list">
             <h3>Vélemények:</h3>
             @if ($movie->ratings_enabled)
@@ -41,23 +42,34 @@
                         </div>
                     @endif
                     <div class="h5">
-                        @if ($userRating) Már írtál véleményt erről a filmről: @else Mondd el a véleményed! @endif
+                        @if ($userRating) Már írtál véleményt erről a filmről, itt módosíthatod @else Mondd el a véleményed! @endif
                     </div>
                     <form action="{{ route('movie.rate', $movie) }}" method="POST">
                         @csrf
                         <?php
                         $initRating = old('rating') ? old('rating') : ($userRating ? $userRating->rating : ''); ?>
-                        <div>
-                            <label for="movieRating1">1</label>
-                            <input type="radio" name="rating" id="movieRating1" value="1" @if ($initRating === '1') checked @endif>
-                            <label for="movieRating2">2</label>
-                            <input type="radio" name="rating" id="movieRating2" value="2" @if ($initRating === '2') checked @endif>
-                            <label for="movieRating3">3</label>
-                            <input type="radio" name="rating" id="movieRating3" value="3" @if ($initRating === '3') checked @endif>
-                            <label for="movieRating4">4</label>
-                            <input type="radio" name="rating" id="movieRating4" value="4" @if ($initRating === '4') checked @endif>
-                            <label for="movieRating5">5</label>
-                            <input type="radio" name="rating" id="movieRating5" value="5" @if ($initRating === '5') checked @endif>
+                        <h3></h3>
+                        <div class="d-flex">
+                            <div class="mx-2 text-center">
+                                <label for="movieRating1">1</label> <br>
+                                <input type="radio" name="rating" id="movieRating1" value="1" @if ($initRating === '1') checked @endif>
+                            </div>
+                            <div class="mx-2 text-center">
+                                <label for="movieRating2">2</label> <br>
+                                <input type="radio" name="rating" id="movieRating2" value="2" @if ($initRating === '2') checked @endif>
+                            </div>
+                            <div class="mx-2 text-center">
+                                <label for="movieRating3">3</label> <br>
+                                <input type="radio" name="rating" id="movieRating3" value="3" @if ($initRating === '3') checked @endif>
+                            </div>
+                            <div class="mx-2 text-center">
+                                <label for="movieRating4">4</label> <br>
+                                <input type="radio" name="rating" id="movieRating4" value="4" @if ($initRating === '4') checked @endif>
+                            </div>
+                            <div class="mx-2 text-center">
+                                <label for="movieRating5">5</label> <br>
+                                <input type="radio" name="rating" id="movieRating5" value="5" @if ($initRating === '5') checked @endif>
+                            </div>
                         </div>
                         @error('rating')
                             <p class="text-danger">
@@ -66,8 +78,8 @@
                         @enderror
                         <label for="movieComment">Megjegyzés</label>
                         <br>
-                        <textarea name="comment"
-                            id="movieComment">{{ old('comment') ? old('comment') : ($userRating ? $userRating->comment : '') }}</textarea>
+                        <textarea name="comment" id="movieComment"
+                            cols="100">{{ old('comment') ? old('comment') : ($userRating ? $userRating->comment : '') }}</textarea>
                         @error('comment')
                             <p class="text-danger">
                                 {{ $message }}
@@ -86,7 +98,8 @@
             @foreach ($ratings as $rating)
                 <div class="col-12 p-3 rounded border my-3">
                     <div class="d-flex justify-content-between">
-                        <div>{{ $rating->user->name }}</div>
+                        <div class="{{ $rating->user->is_admin ? 'text-danger' : '' }}">{{ $rating->user->name }}
+                        </div>
                         <div>{{ $rating->rating }}/5</div>
                     </div>
                     <p>

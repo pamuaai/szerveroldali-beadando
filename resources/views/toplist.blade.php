@@ -17,6 +17,7 @@
     @include('header')
     <div class="container mt-5">
         <div class="row">
+            <h1>Toplista</h1>
             @foreach ($topMovies as $movie)
                 <div class="col-xs-12 col-md-6 col-lg-4 my-3">
                     <a href="{{ route('movie', $movie) }}">
@@ -26,7 +27,7 @@
 
                             {{ $movie->title }}
                             <p>
-                                rating: {{ $movie->getRating() }}/5.00
+                                Értékelés: {{ $movie->getRating() }}/5.00
                             </p>
                         </div>
                     </a>
