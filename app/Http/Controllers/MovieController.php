@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Movie;
+use Illuminate\Support\Facades\Auth;
 
 class MovieController extends Controller
 {
@@ -32,5 +34,22 @@ class MovieController extends Controller
             ->take(6)
             ->get();
         return view('toplist', compact('topMovies'));
+    }
+
+    public function newMovieForm()
+    {
+
+        return Auth::user()->is_admin ? view('new-movie') : view('home');
+    }
+
+    public function store(Request $request)
+    {
+        if (!Auth::user()->is_admin) {
+            return view('home');
+        } else {
+            dd($request);
+            //Validate request
+            //Store movie
+        }
     }
 }

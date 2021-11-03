@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [MovieController::class, 'index']);
+Route::get('/', [MovieController::class, 'index'])->name('home');
 
 Route::get('/logout', [UserController::class, 'logout']);
 
@@ -25,6 +25,9 @@ Route::get('/movie/{movie}', [MovieController::class, 'movie'])->name('movie');
 Route::post('/movie/rate/{movie}', [RatingController::class, 'store'])->name('movie.rate');
 
 Route::get('/toplist', [MovieController::class, 'toplist'])->name('toplist');
+
+Route::get('/new-movie', [MovieController::class, 'newMovieForm'])->name('newMovieForm');
+Route::post('/new-movie/store', [MovieController::class, 'store'])->name('movie.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
