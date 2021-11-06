@@ -21,7 +21,8 @@
         <h2>Rendező: {{ $movie->director }}</h2>
         <div class="row">
             <div class="col-md-6">
-                <img src="{{ $movie->image }}" alt="{{ $movie->title }} :Movie poster" class="img-fluid" />
+                <img src="{{ asset('storage/' . $movie->image) }}" alt="{{ $movie->title }} :Movie poster"
+                    class="img-fluid" />
             </div>
             <div class="col-md-6">
                 <h3>Leírás</h3>

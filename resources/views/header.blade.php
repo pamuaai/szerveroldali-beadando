@@ -19,7 +19,7 @@
                 @auth
                     {{ Auth::user()->name }} | <a href="/logout">Logout</a>
                     @if (Auth::user()->is_admin)
-                        | <a href="/new-movie/">Új film</a>
+                        | <a href={{ route('admin.movies.create') }}>Új film</a>
                     @endif
                 @else
                     <a href="/login">Login</a>

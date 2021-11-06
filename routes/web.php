@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminMovieController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\UserController;
@@ -26,8 +27,17 @@ Route::post('/movie/rate/{movie}', [RatingController::class, 'store'])->name('mo
 
 Route::get('/toplist', [MovieController::class, 'toplist'])->name('toplist');
 
-Route::get('/new-movie', [MovieController::class, 'newMovieForm'])->name('newMovieForm');
+
 Route::post('/new-movie/store', [MovieController::class, 'store'])->name('movie.store');
+
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth', 'isAdmin'])
+    ->group(function () {
+        Route::resource('movies', AdminMovieController::class);
+        // Route::get('/new-movie', [AdminMovieController::class, 'create'])->name('movies.create');
+    });
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -10,6 +10,9 @@ class Movie extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    protected $guarded = [];
+
     public function ratings()
     {
         return $this->hasMany(Rating::class);
