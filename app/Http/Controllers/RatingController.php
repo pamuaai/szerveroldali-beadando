@@ -23,7 +23,7 @@ class RatingController extends Controller
         }
         $data = $request->validate([
             'rating' => 'required|regex:/[1-5]/',
-            'comment' => 'required'
+            'comment' => 'sometimes',
         ], [
             'rating.required' => 'Kérjük pontozd a filmet 1-től 5-ig!',
             'rating.regex' => 'Az értékelés egy 1 és 5 közötti szám legyen!',

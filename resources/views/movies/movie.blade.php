@@ -25,13 +25,30 @@
                     class="img-fluid" />
             </div>
             <div class="col-md-6">
+                @auth
+                    @if (Auth::user()->is_admin)
+                        <form action="{{ route('admin.movies.destroy', $movie) }}" method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Film törlése</button>
+                        </form>
+                    @endif
+                @endauth
                 <h3>Leírás</h3>
                 {{ $movie->description }}
             </div>
         </div>
         <h3 class="avg-rating mt-3">Átlagos értékelés: {{ $movie->getRating() }}/5.00</h3>
         <div class="row ratings-list">
-            <h3>Vélemények:</h3>
+            @auth
+                @if (Auth::user()->is_admin)
+                    <form action="{{ route('admin.movie.rating.clear', $movie) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Összes értékelés törlése</button>
+                    </form>
+                @endif
+            @endauth
+            <h3>Értékelések:</h3>
             @if ($movie->ratings_enabled)
                 @auth
                     <?php

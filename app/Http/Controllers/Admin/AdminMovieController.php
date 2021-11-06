@@ -26,7 +26,7 @@ class AdminMovieController extends Controller
      */
     public function create()
     {
-        return view('new-movie');
+        return view('movies.new-movie');
     }
 
     /**
@@ -38,31 +38,12 @@ class AdminMovieController extends Controller
     public function store()
     {
         // Validation
-
-        $data = request()->validate([
-            'title' => 'required | max:255',
-            'director' => 'required | max:128',
-            'year' => 'required | numeric | min:1870 | max:' . date('Y'),
-            'description' => 'max:512 | sometimes | nullable',
-            'length' => 'required | min:0 | max: 51420 ',
-            'image' => 'max:2048 | mimes:jpeg,jpg,png',
-        ], [
-            'title.required' => 'Kérjük Add meg a film címét!',
-            'rating.regex' => 'Az értékelés egy 1 és 5 közötti szám legyen!',
-        ]);
-
-        $newMovie = Movie::create($data);
+        $newMovie = Movie::create($this->validateMovieRequest());
         $this->storeImage($newMovie);
         return redirect()->route('movie', $newMovie);
     }
 
-    private function storeImage($movie)
-    {
-        if (request()->has('image'))
-            $movie->update([
-                'image' => request()->image->store('movies', 'public'),
-            ]);
-    }
+
 
     /**
      * Display the specified resource.
@@ -81,9 +62,10 @@ class AdminMovieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Movie $movie)
     {
         //
+        return view('movies.edit-movie', compact('movie'));
     }
 
     /**
@@ -93,9 +75,19 @@ class AdminMovieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Movie $movie)
     {
         //
+        $movie->update($this->validateMovieRequest());
+        $this->storeImage($movie);
+        return redirect()->route('movie', $movie);
+    }
+
+    public function clearAllRatings(Movie $movie)
+    {
+        $movie->ratings()->delete();
+
+        return redirect()->route('movie', $movie);
     }
 
     /**
@@ -104,8 +96,33 @@ class AdminMovieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Movie $movie)
     {
         //
+        $movie->delete();
+        return redirect()->route('home');
+    }
+
+    private function validateMovieRequest()
+    {
+        return request()->validate([
+            'title' => 'required | max:255',
+            'director' => 'required | max:128',
+            'year' => 'required | numeric | min:1870 | max:' . date('Y'),
+            'description' => 'max:512 | sometimes | nullable',
+            'length' => 'required | min:0 | max: 51420 ',
+            'image' => 'max:2048 | mimes:jpeg,jpg,png',
+        ], [
+            'title.required' => 'Kérjük Add meg a film címét!',
+            'rating.regex' => 'Az értékelés egy 1 és 5 közötti szám legyen!',
+        ]);
+    }
+
+    private function storeImage($movie)
+    {
+        if (request()->has('image'))
+            $movie->update([
+                'image' => request()->image->store('movies', 'public'),
+            ]);
     }
 }

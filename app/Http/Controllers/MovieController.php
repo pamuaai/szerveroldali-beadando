@@ -24,7 +24,7 @@ class MovieController extends Controller
     public function movie(Movie $movie)
     {
         $ratings = $movie->ratings()->orderBy('updated_at', 'DESC')->paginate(10);
-        return view('movie', compact('movie', 'ratings'));
+        return view('movies.movie', compact('movie', 'ratings'));
     }
 
     public function topList()

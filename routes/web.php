@@ -5,6 +5,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Movie;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [MovieController::class, 'index'])->name('home');
+Route::get('/trashedlist', function () {
+    dd(Movie::onlyTrashed()->get());
+})->name('trashed');
 
 Route::get('/logout', [UserController::class, 'logout']);
 
@@ -34,6 +38,7 @@ Route::prefix('admin')
     ->name('admin.')
     ->middleware(['auth', 'isAdmin'])
     ->group(function () {
+        Route::post('/movie/{movie}/ratings/clear', [AdminMovieController::class, 'clearAllRatings'])->name('movie.rating.clear');
         Route::resource('movies', AdminMovieController::class);
         // Route::get('/new-movie', [AdminMovieController::class, 'create'])->name('movies.create');
     });
