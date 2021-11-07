@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Movie;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminMovieController extends Controller
 {
@@ -18,6 +18,8 @@ class AdminMovieController extends Controller
     {
         //
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -40,6 +42,7 @@ class AdminMovieController extends Controller
         // Validation
         $newMovie = Movie::create($this->validateMovieRequest());
         $this->storeImage($newMovie);
+        request()->session()->flash('movie_stored', true);
         return redirect()->route('movie', $newMovie);
     }
 
@@ -54,6 +57,13 @@ class AdminMovieController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function showDeletedMovie($movieId)
+    {
+        $movie = Movie::onlyTrashed()->where('id', $movieId)->firstOrFail();
+        // $ratings = $movie->ratings->orderBy('updated_at', 'DESC')->paginate(10);
+        return app('App\Http\Controllers\MovieController')->movie($movie);
     }
 
     /**
@@ -80,13 +90,14 @@ class AdminMovieController extends Controller
         //
         $movie->update($this->validateMovieRequest());
         $this->storeImage($movie);
+        request()->session()->flash('movie_edited', true);
         return redirect()->route('movie', $movie);
     }
 
     public function clearAllRatings(Movie $movie)
     {
         $movie->ratings()->delete();
-
+        request()->session()->flash('ratings_cleared', true);
         return redirect()->route('movie', $movie);
     }
 
@@ -100,7 +111,17 @@ class AdminMovieController extends Controller
     {
         //
         $movie->delete();
-        return redirect()->route('home');
+        request()->session()->flash('movie_deleted', true);
+        return redirect()->route('admin.deleted.movie', $movie);
+    }
+
+    public function restore($movieId)
+    {
+        //
+        $movie = Movie::onlyTrashed()->where('id', $movieId)->firstOrFail();
+        $movie->restore();
+        request()->session()->flash('movie_restored', true);
+        return redirect()->route('movie', $movie);
     }
 
     private function validateMovieRequest()
@@ -120,9 +141,19 @@ class AdminMovieController extends Controller
 
     private function storeImage($movie)
     {
-        if (request()->has('image'))
+        if (request()->has('deleteImage') && $movie->image) {
+            Storage::delete($movie->image);
+            $movie->update([
+                'image' => null,
+            ]);
+        }
+        if (request()->has('image')) {
+            if ($movie->image) {
+                Storage::delete($movie->image);
+            }
             $movie->update([
                 'image' => request()->image->store('movies', 'public'),
             ]);
+        }
     }
 }

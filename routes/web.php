@@ -40,6 +40,9 @@ Route::prefix('admin')
     ->group(function () {
         Route::post('/movie/{movie}/ratings/clear', [AdminMovieController::class, 'clearAllRatings'])->name('movie.rating.clear');
         Route::resource('movies', AdminMovieController::class);
+        Route::get('/movies/restore/{movie}', [AdminMovieController::class, 'restore'])->name('movies.restore');
+        Route::get('/deleted-movie/{movie}', [AdminMovieController::class, 'showDeletedMovie'])->name('deleted.movie');
+
         // Route::get('/new-movie', [AdminMovieController::class, 'create'])->name('movies.create');
     });
 

@@ -16,22 +16,60 @@
 <body>
     @include('header')
     <div class="container mt-5">
-
+        @if (Session::has('movie_stored'))
+            <div class="alert alert-success" role="alert">
+                A filmet létrehoztad!
+            </div>
+        @endif
+        @if (Session::has('movie_edited'))
+            <div class="alert alert-success" role="alert">
+                A módosítás sikeres volt!
+            </div>
+        @endif
+        @if (Session::has('movie_deleted'))
+            <div class="alert alert-success" role="alert">
+                A film törlésre került!
+            </div>
+        @endif
+        @if (Session::has('movie_restored'))
+            <div class="alert alert-success" role="alert">
+                A filmet sikeresen visszaállítottad!
+            </div>
+        @endif
+        @if ($movie->deleted_at)
+            <div class="alert alert-danger" role="alert">
+                Figyelem!
+                Ez a film már törölve lett, csak Admin jogosultsággal tekinthető meg
+            </div>
+        @endif
         <h1>{{ $movie->title }} ({{ $movie->year }})</h1>
         <h2>Rendező: {{ $movie->director }}</h2>
         <div class="row">
             <div class="col-md-6">
-                <img src="{{ asset('storage/' . $movie->image) }}" alt="{{ $movie->title }} :Movie poster"
-                    class="img-fluid" />
+                <img src="{{ $movie->image ? asset('storage/' . $movie->image) : asset('images/moviePlaceholder.jpg') }}"
+                    alt="{{ $movie->title }} - Movie poster" class="img-fluid" />
             </div>
             <div class="col-md-6">
                 @auth
                     @if (Auth::user()->is_admin)
-                        <form action="{{ route('admin.movies.destroy', $movie) }}" method="POST">
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Film törlése</button>
-                        </form>
+                        <div class="d-inline-block">
+                            @if ($movie->deleted_at)
+                                <form action="{{ route('admin.movies.restore', $movie) }}" method="POST">
+                                    @method('GET')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Film visszaállítása</button>
+                                </form>
+                            @else
+                                <form action="{{ route('admin.movies.destroy', $movie) }}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Film törlése</button>
+                                </form>
+                            @endif
+                        </div>
+                        <a href="{{ route('admin.movies.edit', $movie) }}"
+                            class="btn btn-warning d-inline-block">Módosítás</a>
+
                     @endif
                 @endauth
                 <h3>Leírás</h3>
@@ -46,6 +84,11 @@
                         @csrf
                         <button type="submit" class="btn btn-danger">Összes értékelés törlése</button>
                     </form>
+                @endif
+                @if (Session::has('ratings_cleared'))
+                    <div class="alert alert-success mt-3" role="alert">
+                        Sikeresen törölted az értékeléseket!
+                    </div>
                 @endif
             @endauth
             <h3>Értékelések:</h3>

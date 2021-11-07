@@ -22,8 +22,8 @@
                 <div class="col-xs-12 col-md-6 col-lg-4 my-3">
                     <a href="{{ route('movie', $movie) }}">
                         <div class="card p-3 rounded">
-                            <img src="{{ $movie->image }}" alt="{{ $movie->title }} :Movie poster"
-                                class="img-fluid" />
+                            <img src="{{ $movie->image ? asset('storage/' . $movie->image) : asset('images/moviePlaceholder.jpg') }}"
+                                alt="{{ $movie->title }} - Movie poster" class="img-fluid" />
 
                             {{ $movie->title }}
                             <p>
